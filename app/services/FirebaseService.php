@@ -13,7 +13,7 @@ class FirebaseService
     {
         $factory = (new Factory)
             ->withServiceAccount(storage_path('app/firebase/firebase_credentials.json'))
-            ->withDatabaseUri('https://laravel-fire-32b6a-default-rtdb.firebaseio.com');
+            ->withDatabaseUri('https://petcare-2cc22-default-rtdb.firebaseio.com/');
 
         $this->database = $factory->createDatabase();
     }

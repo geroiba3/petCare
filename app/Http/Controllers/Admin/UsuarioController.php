@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\FirebaseService;
+use App\Models\User;
 
 class UsuarioController extends Controller
 {
@@ -20,10 +22,18 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $Usuarios = $this->firebase->getDatabase()->getReference('Usuarios')->getValue();
-       return view ('usuarios.index',['Usuarios' => $Usuarios]);    
+
+     $Usuarios = $this->firebase->getDatabase()->getReference('Usuarios')->getValue();
+   // return view ('usuarios.index',['Usuarios' => $Usuarios]);    
+
+     if (!$Usuarios) {
+         $Usuarios = [];
+         }
     
-    }
+         $usuarios = User::all(); // Obtener todos los usuarios desde la base de datos
+    return view('usuarios.index', compact('usuarios')); // Pasar la variable a la vista
+    
+}
 
     /**
      * Show the form for creating a new resource.
