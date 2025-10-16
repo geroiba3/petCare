@@ -22,16 +22,18 @@ class UsuarioController extends Controller
      */
     public function index()
     {
+        $usuarios = $this->firebase->getDatabase()->getReference('Usuarios')->getValue();
 
-     $Usuarios = $this->firebase->getDatabase()->getReference('Usuarios')->getValue();
-   // return view ('usuarios.index',['Usuarios' => $Usuarios]);    
+        // dd($usuarios);
+        // return view ('usuarios.index',['Usuarios' => $Usuarios]);    
 
-     if (!$Usuarios) {
-         $Usuarios = [];
-         }
-    
-         $usuarios = User::all(); // Obtener todos los usuarios desde la base de datos
-    return view('usuarios.index', compact('usuarios')); // Pasar la variable a la vista
+        if (!$usuarios) {
+            $usuarios = [];
+        }
+
+        // $usuarios = User::all(); // Obtener todos los usuarios desde la base de datos
+        return view('usuarios.index', compact('usuarios')); // Pasar la variable a la vista
+
     
 }
 
@@ -40,7 +42,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        //
+        return view('usuarios.create');
     }
 
     /**
@@ -48,7 +50,21 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'telefono' => 'required|string|max:20',
+            'password' => 'required|string|min:8|',
+        ]);
+
+        $newUser = [
+            'nombre' => $request->input('nombre'),
+            'email' => $request->input('email'),
+            'telefono' => $request->input('telefono'),
+            'password' => bcrypt($request->input('password')), // Asegúrate de hashear la contraseña
+        ];
+        $this->firebase->getDatabase()->getReference('Usuarios')->push($newUser);
+        return redirect()->route('usuarios.index')->with('success', 'Usuario creado exitosamente.');
     }
 
     /**
