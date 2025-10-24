@@ -4,24 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Añadir usuario</title>
+    <title>Editar Usuario</title>
 </head>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Añadir Usuario</title>
-</head>
+
 <body>
-    <h1>Añadir Usuario</h1>
+    <h1>Editar Usuario</h1>
 
-    <form action="{{ route('usuarios.store') }}" method="POST">
+    {{-- @dd($usuario) --}}
+
+    <form action="{{ route('usuarios.update', ['usuario' => $id]) }}" method="POST">
         @csrf
-
+        @method('PUT')
         <div>
             <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" value="{{ old('nombre') }}">
+            <input type="text" id="nombre" name="nombre" value="{{ old('nombre', $usuario['nombre'] ?? '') }}">
             @error('nombre')
                 <div style="color: red;">{{ $message }}</div>
             @enderror
@@ -29,7 +25,7 @@
 
         <div>
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="{{ old('email') }}">
+            <input type="email" id="email" name="email" value="{{ old('email', $usuario['email'] ?? '') }}">
             @error('email')
                 <div style="color: red;">{{ $message }}</div>
             @enderror
@@ -37,12 +33,12 @@
 
         <div>
             <label for="telefono">Teléfono:</label>
-            <input type="text" id="telefono" name="telefono" value="{{ old('telefono') }}">
+            <input type="text" id="telefono" name="telefono" value="{{ old('telefono', $usuario['telefono'] ?? '') }}">
             @error('telefono')
                 <div style="color: red;">{{ $message }}</div>
             @enderror
         </div>
-         <label for="rol">Rol</label>
+ <label for="rol">Rol</label>
      <select name="rol" id="rol" class="form-control" required>
         <option value="">-- Selecciona un rol --</option>
         <option value="administrador">Administrador</option>
@@ -58,8 +54,8 @@
             @enderror
         </div>
 
-        <button type="submit">Crear Usuario</button>
+        <button type="submit">Editar Usuario</button>
     </form>
 </body>
-</html>
 
+</html>

@@ -8,6 +8,9 @@
 <body>
     <h1>Usuarios</h1>
     <a href="{{ route('usuarios.create') }}">crear Usuario</a>
+   
+
+
     <table border="1">
         <thead>
             <tr>
@@ -24,11 +27,12 @@
                         <td>{{ $usuario['nombre'] }}</td>
                         <td>{{ $usuario['email'] }}</td>
                         <td>{{ $usuario['telefono'] }}</td>
+                        <td>{{ $usuario['rol'] }}</td>
                         <td>{{ $usuario['password'] }}</td>
                        
                         <td>
 
-
+                         <a href="{{ route('usuarios.edit', $key) }}">Editar Usuario</a>
                         </td>
                     </tr>
                 @endif
