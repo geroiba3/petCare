@@ -24,7 +24,7 @@ class MascotaController extends Controller
             $mascota = [];
         }    
     
-        return view('mascota.index', compact('mascota')); 
+        return view('admin.mascota.index', compact('mascota')); 
     }
 
     /**
@@ -32,7 +32,7 @@ class MascotaController extends Controller
      */
     public function create()
     {
-        return view('mascota.create');
+        return view('admin.mascota.create');
     }
 
     /**
@@ -59,7 +59,7 @@ class MascotaController extends Controller
         
     ];
     $this->firebase->getDatabase()->getReference('Mascota')->push($newMascota);
-        return redirect()->route('mascota.index')->with('success', 'Mascota creado exitosamente.');
+        return redirect()->route('admin.mascota.index')->with('success', 'Mascota creado exitosamente.');
 
     }
 
@@ -76,7 +76,8 @@ class MascotaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+         $mascota = $this->firebase->getDatabase()->getReference('Mascota/' . $id)->getValue();
+        return view('admin.mascota.edit', compact('mascota', 'id'));
     }
 
     /**
@@ -85,6 +86,28 @@ class MascotaController extends Controller
     public function update(Request $request, string $id)
     {
         //
+           $request->validate([
+            'nombre' => 'required|string|max:100',
+            'especie' => 'required|string|max:50',
+            'raza' => 'nullable|string|max:100',
+    '        sexo' => 'required|in:macho,hembra',
+            'fecha_nacimiento' => 'nullable|date',
+    'peso' => 'nullable|numeric|min:0',
+
+]);
+    $newMascota = [
+        'nombre' => $request->input('nombre'),
+        'especie' => $request->input('especie'),
+        'raza' => $request->input('raza'),
+        'sexo' => $request->input('sexo'),
+        'fecha_nacimiento' => $request->input('fecha_nacimiento'),
+        'peso' => $request->input('peso'),
+        
+    ];
+    $this->firebase->getDatabase()->getReference('Mascota')->push($newMascota);
+        return redirect()->route('admin.mascota.index')->with('success', 'Mascota creado exitosamente.');
+
+    
     }
 
     /**

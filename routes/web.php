@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\MascotaController;
 use App\Http\Controllers\Admin\UsuarioController;
+use App\Http\Controllers\Admin\VeterinariaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -9,5 +10,6 @@ Route::get('/', function () {
 });
 Route::resource('/usuarios', UsuarioController::class);
 Route::resource('/mascota', MascotaController::class);
+Route::resource('/veterinaria', VeterinariaController::class);
 
 

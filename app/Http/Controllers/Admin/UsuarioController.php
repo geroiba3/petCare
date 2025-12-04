@@ -30,7 +30,7 @@ class UsuarioController extends Controller
         }
 
         
-        return view('usuarios.index', compact('usuarios')); // Pasar la variable a la vista
+        return view('admin.usuarios.index', compact('usuarios')); // Pasar la variable a la vista
 
 
     }
@@ -40,7 +40,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        return view('usuarios.create');
+        return view('admin.usuarios.create');
     }
 
     /**
@@ -65,7 +65,7 @@ class UsuarioController extends Controller
             'password' => bcrypt($request->input('password')), // Asegúrate de hashear la contraseña
         ];
         $this->firebase->getDatabase()->getReference('Usuarios')->push($newUser);
-        return redirect()->route('usuarios.index')->with('success', 'Usuario creado exitosamente.');
+        return redirect()->route('admin.usuarios.index')->with('success', 'Usuario creado exitosamente.');
     }
 
     /**
@@ -83,7 +83,7 @@ class UsuarioController extends Controller
     {
         $usuario = $this->firebase->getDatabase()->getReference('Usuarios/' . $id)->getValue();
         // dd($usuario);
-        return view('usuarios.edit', compact('usuario', 'id'));
+        return view('admin.usuarios.edit', compact('usuario', 'id'));
     }
 
     /**
@@ -108,7 +108,7 @@ class UsuarioController extends Controller
         ];
         $this->firebase->getDatabase()->getReference('Usuarios/' . $id)->set($newUser);
 
-        return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado exitosamente.');
+        return redirect()->route('admin.usuarios.index')->with('success', 'Usuario actualizado exitosamente.');
 
     }
 

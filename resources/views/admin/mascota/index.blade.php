@@ -31,7 +31,8 @@
                    <td>{{ $mascotaItem['fecha_nacimiento'] ? \Carbon\Carbon::parse($mascotaItem['fecha_nacimiento'])->format('d/m/Y') : '—' }}</td> 
                    <td>{{ $mascotaItem['peso'] ? $mascotaItem['peso'] . ' kg' : '—' }}</td>
 
-                            <a href="{{ route('mascota.edit', $key) }}">Editar</a>
+                        <td>
+                         <a href="{{ route('mascota.edit', $key) }}">Editar Mascota</a> 
                         </td>
                     </tr>
                 @endif
